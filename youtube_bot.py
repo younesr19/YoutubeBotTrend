@@ -12,7 +12,7 @@ class YoutubeBot():
         print('Initialisation des options et du navigateur...\n')
         options = Options()
         options.add_argument('--headless')
-        self.driver = webdriver.Firefox(executable_path=r'/home/etudiant/projet_youtube/geckodriver',options=options)
+        self.driver = webdriver.Firefox(executable_path=r'./geckodriver',options=options)
 
     def AllerTendance(self):
         print('Accès à la page tendance de Youtube...\n')
@@ -47,7 +47,7 @@ class YoutubeBot():
 
             liste_video.append(Video(titre,chaine,vue,publication,lien))
         for i in range(0,len(liste_video)):
-            print(liste_video[i].titre+ "\t\t\t\t\t\t\t\t"+str(liste_video[i].getRatioUpperTitre()))
+            print(liste_video[i].__str__())
 
 
 youtubebot = YoutubeBot()
