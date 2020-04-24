@@ -41,9 +41,14 @@ def traitement_vues(vues):
             vues_finale = vues_million+"000000"
 
     else:
-        vues_mille= separateur_texte(vues,' ')[0]
-        vues_finale=vues_mille+"000"
+        vues_mille = separateur_texte(vues,' ')[0]
+        virgulepresent = vues_mille.find(',')
 
+        if virgulepresent != -1:
+            vues_mille = separateur_texte(vues_mille,',')
+            vues_finale = vues_mille[0]+vues_mille[1]+"00"
+        else:
+            vues_finale=vues_mille+"000"
     return int(vues_finale)
 
 
@@ -80,3 +85,26 @@ def traitement_publication(publication):
 
 
     return publication_finale
+
+#Fonction permettant de retirer les vidéos qui ne sont pas en tendances (notament les recommendations)
+#Retourne une nouvelle liste webdriver
+def retirer_videoNonTrend(container):
+    liste_section = container.find_elements_by_tag_name('ytd-item-section-renderer')
+    liste_finale = []
+    for section in liste_section:
+        crea = ""
+        try:
+            crea = section.find_element_by_tag_name('yt-horizontal-list-renderer')
+        except Exception:
+            liste_finale.append(section)
+    return liste_finale
+
+
+def ratio_upper(titre):
+    upper = 0
+    long_titre = len(titre)
+    for char in titre:
+        if char.isupper():
+            upper+=1
+    val = upper/float(long_titre)
+    return val
