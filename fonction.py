@@ -100,6 +100,23 @@ def retirer_videoNonTrend(container):
     return liste_finale
 
 
+def traitement_temps(temps):
+    temps = temps.replace(u'\xa0', u' ')
+    temps_decoupee = separateur_texte(temps,' ')
+
+    #Si c'est une vidéo de plus d'une heure
+    if len(temps_decoupee) == 7:
+        return int(temps_decoupee[0])*60*60+int(temps_decoupee[2])*60+int(temps_decoupee[5])
+    return int(temps_decoupee[0])*60+int(temps_decoupee[3])
+
+
+def recuperer_tendance_speciale(liste_tendance,type_tendance):
+    for tendance in liste_tendance:
+        if tendance.text == type_tendance.decode('utf-8'):
+            return tendance
+    return liste_tendance[0]
+
+
 def ratio_upper(titre):
     upper = 0
     long_titre = len(titre)
